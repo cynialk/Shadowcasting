@@ -4,11 +4,13 @@ using System.Text;
 
 namespace Shadowcasting
 {
-    class Grid
-    {
-    }
-
     class Tile
     {
+        public bool Revealed { get; set; }
+        public bool Wall { get; set; }
+        public Tile()
+        {
+
+        }
     }
 }
