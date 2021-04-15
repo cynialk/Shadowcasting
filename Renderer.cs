@@ -7,7 +7,7 @@ namespace Shadowcasting
 {
     static class Renderer
     {
-        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles)
+        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles, int currentAlgorithm)
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
@@ -26,6 +26,15 @@ namespace Shadowcasting
                         Raylib.DrawRectangleLines(xorig + (width / tiles.GetLength(0)) * x, yorig + (height / tiles.GetLength(1)) * y, width / tiles.GetLength(0), height / tiles.GetLength(1), Color.BLACK);
                     }
                 }
+            }
+            switch(currentAlgorithm)
+            {
+                case 0:
+                    Raylib.DrawText("Current Algorithm: Recursive", 10, 10, 20, Color.BLACK);
+                    break;
+                case 1:
+                    Raylib.DrawText("Current Algorithm: Diamond Wall", 10, 10, 20, Color.BLACK);
+                    break;
             }
             Raylib.EndDrawing();
         }
