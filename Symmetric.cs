@@ -17,6 +17,7 @@ namespace Shadowcasting
         }
         public void compute_fov(int ox, int oy)
         {
+            
             for (int i = 1; i < 4; i++)
             {
                 Quadrant quadrant = new Quadrant(i, ox, oy);
@@ -58,13 +59,15 @@ namespace Shadowcasting
                             }
                             prev_tile = tile;
                         }
-                        Console.WriteLine("test");
                     }
                     if (is_floor(prev_tile))
                     {
                         scan(row.next());
                     }
+                    
                 }
+                Row first_row = new Row(1, -1, 1);
+                scan(first_row);
             }
         }
     }
