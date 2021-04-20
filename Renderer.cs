@@ -7,7 +7,7 @@ namespace Shadowcasting
 {
     static class Renderer
     {
-        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles, int currentAlgorithm)
+        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles, int currentAlgorithm, int fps, int averagefps)
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
@@ -36,6 +36,8 @@ namespace Shadowcasting
                     Raylib.DrawText("Current Algorithm: Diamond Wall", 10, 10, 20, Color.BLACK);
                     break;
             }
+            Raylib.DrawText($"Current FPS: " + fps, 10, 30, 20, Color.BLACK);
+            Raylib.DrawText($"Average FPS: " + averagefps, 10, 50, 20, Color.BLACK);
             Raylib.EndDrawing();
         }
     }
