@@ -7,6 +7,8 @@ namespace Shadowcasting
 {
     public struct Tile
     {
+        public int row;
+        public int col;
         public bool Wall;
         public bool Revealed;
     }
@@ -30,6 +32,7 @@ namespace Shadowcasting
             SecondsSinceChange = 0;
 
             FOVRecurse fov = new FOVRecurse();
+            SymmetricShadowcasting ssc = new SymmetricShadowcasting();
             
             Raylib.InitWindow(600, 600, "Shadowcasting");
             int currentAlgorithm = 0;
@@ -54,11 +57,17 @@ namespace Shadowcasting
                 switch (currentAlgorithm)
                 {
                     case 0:
-                        TileMap = GenerateRandomTiles(5, 600, 600);
+                        TileMap = GenerateRandomTiles(5, 50, 50);
                         PosX = TileMap.GetLength(0) / 2;
                         PosY = TileMap.GetLength(1) / 2;
                         fov.ConvertToMap(TileMap);
                         fov.ConvertToTiles();
+                        break;
+                    case 1:
+                        TileMap = GenerateRandomTiles(5, 50, 50);
+                        PosX = TileMap.GetLength(0) / 2;
+                        PosY = TileMap.GetLength(1) / 2;
+                        ssc.compute_fov(PosX, PosY);
                         break;
                 }
                 FramesSinceStart++;
@@ -96,7 +105,7 @@ namespace Shadowcasting
                 for (int y = 0; y < height; y++)
                 {
                     tiles[x, y] = new Tile();
-                    tiles[x, y].Wall = (random.Next(0, 1000) <= pWalls);
+                    tiles[x, y].Wall = (random.Next(0, 100) <= pWalls);
                     tiles[x, y].Revealed = false;
                 }
             }

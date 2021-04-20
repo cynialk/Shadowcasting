@@ -33,7 +33,7 @@ namespace Shadowcasting
                     Raylib.DrawText("Current Algorithm: Recursive", 10, 10, 20, Color.BLACK);
                     break;
                 case 1:
-                    Raylib.DrawText("Current Algorithm: Diamond Wall", 10, 10, 20, Color.BLACK);
+                    Raylib.DrawText("Current Algorithm: Symmetric", 10, 10, 20, Color.BLACK);
                     break;
             }
             Raylib.DrawText($"Current FPS: " + fps, 10, 30, 20, Color.BLACK);
