@@ -8,7 +8,7 @@ namespace Shadowcasting
 {
     class Renderer
     {
-        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles, int currentAlgorithm, int fps, int averagefps, Vector2 mouse)
+        public static void RenderTiles(Vector2 origin, int width, int height, Tile[,] tiles, int currentAlgorithm, int fps, int averagefps, Vector2 mouse, Vector2 playerpos)
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
@@ -16,19 +16,20 @@ namespace Shadowcasting
             int tilewidth = width / tiles.GetLength(0);
             int tileheight = height / tiles.GetLength(1);
             //Tiles
+            
             for (int x = 0; x < tiles.GetLength(0); x++)
             {
                 for(int y = 0; y < tiles.GetLength(1); y++)
                 {
                     Tile tile = tiles[x, y];
-                    //Raylib.DrawRectangle(xorig + (width / tiles.GetLength(0)) * x, yorig + (height / tiles.GetLength(1)) * y, width / tiles.GetLength(0), height / tiles.GetLength(1), Color.BLACK);
+                    //Raylib.DrawRectangle((int)origin.X + (width / tiles.GetLength(0)) * x, (int)origin.Y + (height / tiles.GetLength(1)) * y, width / tiles.GetLength(0), height / tiles.GetLength(1), Color.BLACK);
                     if (!tile.Revealed)
                     {
-                        Raylib.DrawRectangle(xorig + tilewidth * x, yorig + tileheight * y, tilewidth, tileheight, Color.GRAY);
+                        Raylib.DrawRectangle((int)origin.X + tilewidth * x, (int)origin.Y + tileheight * y, tilewidth, tileheight, Color.DARKGRAY);
                     }
                     if (tile.Wall)
                     {
-                        Raylib.DrawRectangleLines(xorig + tilewidth * x, yorig + tileheight * y, tilewidth, tileheight, Color.BLACK);
+                        Raylib.DrawRectangleLines((int)origin.X + tilewidth * x, (int)origin.Y + tileheight * y, tilewidth, tileheight, Color.BLACK);
                     }
                 }
             }

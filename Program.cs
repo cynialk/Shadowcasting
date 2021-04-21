@@ -15,9 +15,8 @@ namespace Shadowcasting
     }
     class Program
     {
-        public static int PosX;
-        public static int PosY;
         public static Tile[,] TileMap;
+        public static Vector2 playerPos;
         public static int FPS;
         static int width = 600;
         static int height = 600;
@@ -37,7 +36,10 @@ namespace Shadowcasting
             SecondsSinceChange = 0;
             FOVRecurse fov = new FOVRecurse();
             SymmetricShadowcasting ssc = new SymmetricShadowcasting();
-            
+            TileMap = GenerateRandomTiles(-1, 50, 50, true);
+            playerPos = new Vector2();
+            playerPos.X = TileMap.GetLength(0) / 2;
+            playerPos.Y = TileMap.GetLength(1) / 2;
             Raylib.InitWindow(width, height, "Shadowcasting");
             int currentAlgorithm = 0;
             int algorithmCount = 2;
@@ -47,8 +49,8 @@ namespace Shadowcasting
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
                 {
                     TileMap = GenerateRandomTiles( -1, 50, 50, true);
-                    PosX = TileMap.GetLength(0) / 2;
-                    PosY = TileMap.GetLength(1) / 2;
+                    playerPos.X = TileMap.GetLength(0) / 2;
+                    playerPos.Y = TileMap.GetLength(1) / 2;
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
                 {
@@ -71,19 +73,19 @@ namespace Shadowcasting
                 //Movement
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_W))
                 {
-                    PosY++;
+                    playerPos.Y--;
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_S))
                 {
-                    PosY--;
+                    playerPos.Y++;
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_D))
                 {
-                    PosX++;
+                    playerPos.X++;
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_A))
                 {
-                    PosX--;
+                    playerPos.X--;
                 }
 
 
@@ -131,11 +133,14 @@ namespace Shadowcasting
                         break;
                     case 1:
                         
-                        ssc.compute_fov(PosX, PosY);
+                        ssc.compute_fov((int)playerPos.X, (int)playerPos.Y);
                         break;
                 }
                 FramesSinceStart++;
-                Renderer.RenderTiles(0, 0, 600, 600, TileMap, currentAlgorithm,FPS, average, Raylib.GetMousePosition());
+                Vector2 origin = new Vector2();
+                origin.Y = 0;
+                origin.X = 0;
+                Renderer.RenderTiles(origin, 600, 600, TileMap, currentAlgorithm,FPS, average, Raylib.GetMousePosition(),playerPos);
             }
         }
         public static void CalculateFPS(Object source, ElapsedEventArgs e)

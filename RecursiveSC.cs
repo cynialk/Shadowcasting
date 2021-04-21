@@ -128,28 +128,28 @@ namespace Shadowcasting
             {
 
                 case 1: //nnw
-                    y = Program.PosY - pDepth;
+                    y = (int)(int)Program.playerPos.Y - pDepth;
                     if (y < 0) return;
 
-                    x = Program.PosX - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    x = (int)Program.playerPos.X - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (x < 0) x = 0;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, false) >= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, false) >= pEndSlope)
                     {
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
                             if (map[x, y] == 1) //current cell blocked
                             {
                                 if (x - 1 >= 0 && map[x - 1, y] == 0) //prior cell within range AND open...
                                                                       //...incremenet the depth, adjust the endslope and recurse
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, Program.PosX, Program.PosY, false));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
                             else
                             {
 
                                 if (x - 1 >= 0 && map[x - 1, y] == 1) //prior cell within range AND open...
                                                                       //..adjust the startslope
-                                    pStartSlope = GetSlope(x - 0.5, y - 0.5, Program.PosX, Program.PosY, false);
+                                    pStartSlope = GetSlope(x - 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -161,25 +161,25 @@ namespace Shadowcasting
 
                 case 2: //nne
 
-                    y = Program.PosY - pDepth;
+                    y = (int)Program.playerPos.Y - pDepth;
                     if (y < 0) return;
 
-                    x = Program.PosX + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    x = (int)Program.playerPos.X + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (x >= map.GetLength(0)) x = map.GetLength(0) - 1;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, false) <= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, false) <= pEndSlope)
                     {
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
                             if (map[x, y] == 1)
                             {
                                 if (x + 1 < map.GetLength(0) && map[x + 1, y] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, Program.PosX, Program.PosY, false));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
                             else
                             {
                                 if (x + 1 < map.GetLength(0) && map[x + 1, y] == 1)
-                                    pStartSlope = -GetSlope(x + 0.5, y - 0.5, Program.PosX, Program.PosY, false);
+                                    pStartSlope = -GetSlope(x + 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -191,27 +191,27 @@ namespace Shadowcasting
 
                 case 3:
 
-                    x = Program.PosX + pDepth;
+                    x = (int)Program.playerPos.X + pDepth;
                     if (x >= map.GetLength(0)) return;
 
-                    y = Program.PosY - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    y = (int)Program.playerPos.Y - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (y < 0) y = 0;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, true) <= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, true) <= pEndSlope)
                     {
 
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
 
                             if (map[x, y] == 1)
                             {
                                 if (y - 1 >= 0 && map[x, y - 1] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, Program.PosX, Program.PosY, true));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
                             }
                             else
                             {
                                 if (y - 1 >= 0 && map[x, y - 1] == 1)
-                                    pStartSlope = -GetSlope(x + 0.5, y - 0.5, Program.PosX, Program.PosY, true);
+                                    pStartSlope = -GetSlope(x + 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -223,27 +223,27 @@ namespace Shadowcasting
 
                 case 4:
 
-                    x = Program.PosX + pDepth;
+                    x = (int)Program.playerPos.X + pDepth;
                     if (x >= map.GetLength(0)) return;
 
-                    y = Program.PosY + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    y = (int)Program.playerPos.Y + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (y >= map.GetLength(1)) y = map.GetLength(1) - 1;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, true) >= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, true) >= pEndSlope)
                     {
 
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
 
                             if (map[x, y] == 1)
                             {
                                 if (y + 1 < map.GetLength(1) && map[x, y + 1] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, Program.PosX, Program.PosY, true));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
                             }
                             else
                             {
                                 if (y + 1 < map.GetLength(1) && map[x, y + 1] == 1)
-                                    pStartSlope = GetSlope(x + 0.5, y + 0.5, Program.PosX, Program.PosY, true);
+                                    pStartSlope = GetSlope(x + 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -255,27 +255,27 @@ namespace Shadowcasting
 
                 case 5:
 
-                    y = Program.PosY + pDepth;
+                    y = (int)Program.playerPos.Y + pDepth;
                     if (y >= map.GetLength(1)) return;
 
-                    x = Program.PosX + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    x = (int)Program.playerPos.X + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (x >= map.GetLength(0)) x = map.GetLength(0) - 1;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, false) >= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, false) >= pEndSlope)
                     {
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
 
                             if (map[x, y] == 1)
                             {
                                 if (x + 1 < map.GetLength(1) && map[x + 1, y] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, Program.PosX, Program.PosY, false));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
                             else
                             {
                                 if (x + 1 < map.GetLength(1)
                                         && map[x + 1, y] == 1)
-                                    pStartSlope = GetSlope(x + 0.5, y + 0.5, Program.PosX, Program.PosY, false);
+                                    pStartSlope = GetSlope(x + 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -287,27 +287,27 @@ namespace Shadowcasting
 
                 case 6:
 
-                    y = Program.PosY + pDepth;
+                    y = (int)Program.playerPos.Y + pDepth;
                     if (y >= map.GetLength(1)) return;
 
-                    x = Program.PosX - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    x = (int)Program.playerPos.X - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (x < 0) x = 0;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, false) <= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, false) <= pEndSlope)
                     {
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
 
                             if (map[x, y] == 1)
                             {
                                 if (x - 1 >= 0 && map[x - 1, y] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, Program.PosX, Program.PosY, false));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
                             else
                             {
                                 if (x - 1 >= 0
                                         && map[x - 1, y] == 1)
-                                    pStartSlope = -GetSlope(x - 0.5, y + 0.5, Program.PosX, Program.PosY, false);
+                                    pStartSlope = -GetSlope(x - 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -319,27 +319,27 @@ namespace Shadowcasting
 
                 case 7:
 
-                    x = Program.PosX - pDepth;
+                    x = (int)Program.playerPos.X - pDepth;
                     if (x < 0) return;
 
-                    y = Program.PosY + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    y = (int)Program.playerPos.Y + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (y >= map.GetLength(1)) y = map.GetLength(1) - 1;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, true) <= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, true) <= pEndSlope)
                     {
 
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
 
                             if (map[x, y] == 1)
                             {
                                 if (y + 1 < map.GetLength(1) && map[x, y + 1] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, Program.PosX, Program.PosY, true));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
                             }
                             else
                             {
                                 if (y + 1 < map.GetLength(1) && map[x, y + 1] == 1)
-                                    pStartSlope = -GetSlope(x - 0.5, y + 0.5, Program.PosX, Program.PosY, true);
+                                    pStartSlope = -GetSlope(x - 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
@@ -351,28 +351,28 @@ namespace Shadowcasting
 
                 case 8: //wnw
 
-                    x = Program.PosX - pDepth;
+                    x = (int)Program.playerPos.X - pDepth;
                     if (x < 0) return;
 
-                    y = Program.PosY - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
+                    y = (int)Program.playerPos.Y - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                     if (y < 0) y = 0;
 
-                    while (GetSlope(x, y, Program.PosX, Program.PosY, true) >= pEndSlope)
+                    while (GetSlope(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y, true) >= pEndSlope)
                     {
 
-                        if (GetVisDistance(x, y, Program.PosX, Program.PosY) <= visrange2)
+                        if (GetVisDistance(x, y, (int)Program.playerPos.X, (int)Program.playerPos.Y) <= visrange2)
                         {
 
                             if (map[x, y] == 1)
                             {
                                 if (y - 1 >= 0 && map[x, y - 1] == 0)
-                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, Program.PosX, Program.PosY, true));
+                                    ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
 
                             }
                             else
                             {
                                 if (y - 1 >= 0 && map[x, y - 1] == 1)
-                                    pStartSlope = GetSlope(x - 0.5, y - 0.5, Program.PosX, Program.PosY, true);
+                                    pStartSlope = GetSlope(x - 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true);
 
                                 VisiblePoints.Add(new Point(x, y));
                             }
