@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Numerics;
 using Raylib_cs;
 
 namespace Shadowcasting
 {
-    static class Renderer
+    class Renderer
     {
-        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles, int currentAlgorithm, int fps, int averagefps)
+        public static void RenderTiles(int xorig, int yorig, int width, int height, Tile[,] tiles, int currentAlgorithm, int fps, int averagefps, Vector2 mouse)
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
+
+            int tilewidth = width / tiles.GetLength(0);
+            int tileheight = height / tiles.GetLength(1);
+            //Tiles
             for (int x = 0; x < tiles.GetLength(0); x++)
             {
                 for(int y = 0; y < tiles.GetLength(1); y++)
@@ -19,14 +24,20 @@ namespace Shadowcasting
                     //Raylib.DrawRectangle(xorig + (width / tiles.GetLength(0)) * x, yorig + (height / tiles.GetLength(1)) * y, width / tiles.GetLength(0), height / tiles.GetLength(1), Color.BLACK);
                     if (!tile.Revealed)
                     {
-                        Raylib.DrawRectangle(xorig + (width / tiles.GetLength(0)) * x, yorig + (height / tiles.GetLength(1)) * y, width / tiles.GetLength(0), height / tiles.GetLength(1), Color.GRAY);
+                        Raylib.DrawRectangle(xorig + tilewidth * x, yorig + tileheight * y, tilewidth, tileheight, Color.GRAY);
                     }
                     if (tile.Wall)
                     {
-                        Raylib.DrawRectangleLines(xorig + (width / tiles.GetLength(0)) * x, yorig + (height / tiles.GetLength(1)) * y, width / tiles.GetLength(0), height / tiles.GetLength(1), Color.BLACK);
+                        Raylib.DrawRectangleLines(xorig + tilewidth * x, yorig + tileheight * y, tilewidth, tileheight, Color.BLACK);
                     }
                 }
             }
+
+            //Mouse/hover
+            int selectedX = (int)Math.Floor(mouse.X / tilewidth);
+            int selectedY = (int)Math.Floor(mouse.Y / tileheight);
+            Raylib.DrawRectangleLines(selectedX*tilewidth,selectedY*tileheight,tilewidth,tileheight,Color.RED);
+
             switch(currentAlgorithm)
             {
                 case 0:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Threading;
 
 namespace Shadowcasting
 {
@@ -10,6 +11,7 @@ namespace Shadowcasting
         bool is_blocking(int x, int y)
         {
             return Program.TileMap[x, y].Wall;
+
         }
         void mark_visible(int x, int y)
         {
@@ -18,8 +20,9 @@ namespace Shadowcasting
         public void compute_fov(int ox, int oy)
         {
             
-            for (int i = 1; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
+
                 Quadrant quadrant = new Quadrant(i, ox, oy);
                 void reveal(Tile tile)
                 {
@@ -29,6 +32,7 @@ namespace Shadowcasting
 
                 bool is_wall(Tile tile)
                 {
+                    if (tile.Equals(default(Tile))) return false;
                     int[] xy = quadrant.transform(tile);
                     return is_blocking(xy[0], xy[1]);
                 }
@@ -48,22 +52,27 @@ namespace Shadowcasting
                         if (is_wall(tile) || Row.is_symmetric(row, tile))
                         {
                             reveal(tile);
-                            if (is_wall(prev_tile) && is_floor(tile)) row.start_slope = row.slope(tile);
-
-
-                            if (is_floor(prev_tile) && is_wall(tile))
-                            {
-                                Row next_row = row.next();
-                                next_row.end_slope = row.slope(tile);
-                                scan(next_row);
-                            }
-                            prev_tile = tile;
                         }
+
+                        if (is_wall(prev_tile) && is_floor(tile))
+                        {
+                            row.start_slope = row.slope(tile);
+                        }
+
+                        if (is_floor(prev_tile) && is_wall(tile))
+                        {
+                            Row next_row = row.next();
+                            next_row.end_slope = row.slope(tile);
+                            scan(next_row);
+                        }
+                        prev_tile = tile;
                     }
                     if (is_floor(prev_tile))
                     {
                         scan(row.next());
+
                     }
+                    return;
                     
                 }
                 Row first_row = new Row(1, -1, 1);
@@ -98,7 +107,7 @@ namespace Shadowcasting
 
     class Row
     {
-        int depth;
+        public int depth { get; set; }
         public float end_slope { get; set; }
         public float start_slope { get; set; }
 
@@ -130,7 +139,7 @@ namespace Shadowcasting
         }
         float round_ties_down(float n)
         {
-            return (float)Math.Floor(n - 0.5);
+            return (float)Math.Ceiling(n - 0.5);
         }
         public Row next()
         {
@@ -138,11 +147,13 @@ namespace Shadowcasting
         }
         public float slope(Tile tile)
         {
-            return 2 * tile.col - 1 / 2 * tile.row;
+
+            return (2f * tile.col - 1) / (2f * tile.row);
+
         }
         public static bool is_symmetric(Row row, Tile tile)
         {
-            return (tile.col >= row.depth * row.start_slope && tile.col <= row.depth * row.end_slope);
+            return tile.col >= (row.depth * row.start_slope) && tile.col <= (row.depth * row.end_slope);
         }
     }
 }
