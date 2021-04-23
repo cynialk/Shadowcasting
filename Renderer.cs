@@ -34,6 +34,8 @@ namespace Shadowcasting
                 }
             }
 
+            //Draw player
+            Raylib.DrawRectangle((int)origin.X + tilewidth * (int)playerpos.X, (int)origin.Y + tileheight * (int)playerpos.Y, tilewidth, tileheight, Color.DARKBLUE);
             //Mouse/hover
             int selectedX = (int)Math.Floor(mouse.X / tilewidth);
             int selectedY = (int)Math.Floor(mouse.Y / tileheight);

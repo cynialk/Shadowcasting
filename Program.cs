@@ -36,7 +36,7 @@ namespace Shadowcasting
             SecondsSinceChange = 0;
             FOVRecurse fov = new FOVRecurse();
             SymmetricShadowcasting ssc = new SymmetricShadowcasting();
-            TileMap = GenerateRandomTiles(-1, 50, 50, true);
+            TileMap = GenerateRandomTiles(-1, 100, 100, true);
             playerPos = new Vector2();
             playerPos.X = TileMap.GetLength(0) / 2;
             playerPos.Y = TileMap.GetLength(1) / 2;
@@ -48,7 +48,7 @@ namespace Shadowcasting
             {
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
                 {
-                    TileMap = GenerateRandomTiles( -1, 50, 50, true);
+                    TileMap = GenerateRandomTiles( -1, 100, 100, true);
                     playerPos.X = TileMap.GetLength(0) / 2;
                     playerPos.Y = TileMap.GetLength(1) / 2;
                 }
@@ -110,7 +110,7 @@ namespace Shadowcasting
 
                 if (!KeepMap)
                 {
-                    TileMap = GenerateRandomTiles(1, 50, 50, true);
+                    TileMap = GenerateRandomTiles(1, 100, 100, true);
                     
                 }
                 else
