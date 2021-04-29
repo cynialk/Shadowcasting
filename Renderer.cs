@@ -27,7 +27,7 @@ namespace Shadowcasting
                     {
                         Raylib.DrawRectangle((int)origin.X + tilewidth * x, (int)origin.Y + tileheight * y, tilewidth, tileheight, Color.DARKGRAY);
                     }
-                    if (tile.Wall)
+                    else if (tile.Wall)
                     {
                         Raylib.DrawRectangleLines((int)origin.X + tilewidth * x, (int)origin.Y + tileheight * y, tilewidth, tileheight, Color.BLACK);
                     }

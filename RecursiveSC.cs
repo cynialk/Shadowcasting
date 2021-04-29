@@ -140,6 +140,7 @@ namespace Shadowcasting
                         {
                             if (map[x, y] == 1) //current cell blocked
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (x - 1 >= 0 && map[x - 1, y] == 0) //prior cell within range AND open...
                                                                       //...incremenet the depth, adjust the endslope and recurse
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
@@ -173,6 +174,7 @@ namespace Shadowcasting
                         {
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (x + 1 < map.GetLength(0) && map[x + 1, y] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
@@ -205,6 +207,7 @@ namespace Shadowcasting
 
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (y - 1 >= 0 && map[x, y - 1] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
                             }
@@ -237,6 +240,7 @@ namespace Shadowcasting
 
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (y + 1 < map.GetLength(1) && map[x, y + 1] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
                             }
@@ -268,6 +272,7 @@ namespace Shadowcasting
 
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (x + 1 < map.GetLength(1) && map[x + 1, y] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
@@ -300,6 +305,7 @@ namespace Shadowcasting
 
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (x - 1 >= 0 && map[x - 1, y] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, false));
                             }
@@ -333,6 +339,7 @@ namespace Shadowcasting
 
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (y + 1 < map.GetLength(1) && map[x, y + 1] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
                             }
@@ -365,6 +372,7 @@ namespace Shadowcasting
 
                             if (map[x, y] == 1)
                             {
+                                VisiblePoints.Add(new Point(x, y));
                                 if (y - 1 >= 0 && map[x, y - 1] == 0)
                                     ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, (int)Program.playerPos.X, (int)Program.playerPos.Y, true));
 
