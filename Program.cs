@@ -142,6 +142,7 @@ namespace Shadowcasting
                 origin.X = 0;
                 Renderer.RenderTiles(origin, 600, 600, TileMap, currentAlgorithm,FPS, average, Raylib.GetMousePosition(),playerPos);
             }
+            Console.WriteLine("Average FPS was: " + average);
         }
         public static void CalculateFPS(Object source, ElapsedEventArgs e)
         {
