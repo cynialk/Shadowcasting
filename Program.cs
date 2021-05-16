@@ -18,8 +18,10 @@ namespace Shadowcasting
         public static Tile[,] TileMap;
         public static Vector2 playerPos;
         public static int FPS;
-        static int width = 600;
-        static int height = 600;
+        static int windowWidth = 1000;
+        static int windowHeight = 1000;
+        static int width = 50;
+        static int height = 50;
         static int FramesSinceStart;
         static int SecondsSinceChange;
         static int average;
@@ -36,11 +38,11 @@ namespace Shadowcasting
             SecondsSinceChange = 0;
             FOVRecurse fov = new FOVRecurse();
             SymmetricShadowcasting ssc = new SymmetricShadowcasting();
-            TileMap = GenerateRandomTiles(-1, 50, 50, true);
+            TileMap = GenerateRandomTiles(-1, width, height, true);
             playerPos = new Vector2();
             playerPos.X = TileMap.GetLength(0) / 2;
             playerPos.Y = TileMap.GetLength(1) / 2;
-            Raylib.InitWindow(width, height, "Shadowcasting");
+            Raylib.InitWindow(windowWidth, windowHeight, "Shadowcasting");
             int currentAlgorithm = 0;
             int algorithmCount = 2;
             timer.Start();
@@ -48,7 +50,7 @@ namespace Shadowcasting
             {
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
                 {
-                    TileMap = GenerateRandomTiles( -1, 50, 50, true);
+                    TileMap = GenerateRandomTiles( -1, width, height, true);
                     playerPos.X = TileMap.GetLength(0) / 2;
                     playerPos.Y = TileMap.GetLength(1) / 2;
                 }
@@ -92,8 +94,8 @@ namespace Shadowcasting
                 if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
                 {
                     Vector2 mouse = Raylib.GetMousePosition();
-                    int tilewidth = width / TileMap.GetLength(0);
-                    int tileheight = height / TileMap.GetLength(1);
+                    int tilewidth = windowWidth / TileMap.GetLength(0);
+                    int tileheight = windowHeight / TileMap.GetLength(1);
                     int selectedX = (int)Math.Floor(mouse.X / tilewidth);
                     int selectedY = (int)Math.Floor(mouse.Y / tileheight);
                     drawWall = !TileMap[selectedX, selectedY].Wall;
@@ -101,8 +103,8 @@ namespace Shadowcasting
                 if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON))
                 {
                     Vector2 mouse = Raylib.GetMousePosition();
-                    int tilewidth = width / TileMap.GetLength(0);
-                    int tileheight = height / TileMap.GetLength(1);
+                    int tilewidth = windowWidth / TileMap.GetLength(0);
+                    int tileheight = windowHeight / TileMap.GetLength(1);
                     int selectedX = (int)Math.Floor(mouse.X / tilewidth);
                     int selectedY = (int)Math.Floor(mouse.Y / tileheight);
                     TileMap[selectedX, selectedY].Wall = drawWall;
@@ -110,7 +112,7 @@ namespace Shadowcasting
 
                 if (!KeepMap)
                 {
-                    TileMap = GenerateRandomTiles(1, 50, 50, true);
+                    TileMap = GenerateRandomTiles(1, width, height, true);
                     
                 }
                 else
@@ -140,7 +142,7 @@ namespace Shadowcasting
                 Vector2 origin = new Vector2();
                 origin.Y = 0;
                 origin.X = 0;
-                Renderer.RenderTiles(origin, 600, 600, TileMap, currentAlgorithm,FPS, average, Raylib.GetMousePosition(),playerPos);
+                Renderer.RenderTiles(origin, windowWidth, windowHeight, TileMap, currentAlgorithm,FPS, average, Raylib.GetMousePosition(),playerPos);
             }
             Console.WriteLine("Average FPS was: " + average);
         }
